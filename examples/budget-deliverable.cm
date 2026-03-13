@@ -1,0 +1,116 @@
+---
+title: SaaS Business Model
+locale: en-US
+exchange:
+  USD_EUR: 0.92
+  EUR_USD: 1.09
+  USD_GBP: 0.79
+  GBP_USD: 1.27
+globals:
+  headcount: 12
+  growth_rate: 15%
+---
+
+# SaaS Business Model
+
+Financial model for a B2B SaaS product with a
+team of {{headcount}} people.
+
+An agent researched current exchange rates and inserted them
+into the frontmatter above for accurate currency conversion.
+
+## Revenue
+
+monthly_users = 2500 customers
+price = $49
+monthly_revenue = price * monthly_users
+annual_revenue = monthly_revenue * 12
+
+Enterprise tier adds 20% on top:
+
+enterprise_uplift = annual_revenue + 20%
+
+## Revenue Growth
+
+Project revenue 3 years out at {{growth_rate}} annual growth,
+compounded monthly for accuracy:
+
+year_1 = compound annual_revenue by @globals.growth_rate monthly over 1 year
+year_2 = compound annual_revenue by @globals.growth_rate monthly over 2 years
+year_3 = compound annual_revenue by @globals.growth_rate monthly over 3 years
+
+## Team Costs
+
+avg_salary = $135000
+fully_loaded = avg_salary + 25%
+team_cost = fully_loaded * @globals.headcount
+monthly_team_cost = team_cost / 12
+
+## Infrastructure
+
+hosting = $8500
+hosting_annual = hosting * 12
+
+Infrastructure cost grows ~8% per year with usage:
+
+hosting_year_3 = compound hosting_annual by 8% over 3 years
+
+## Equipment Depreciation
+
+Laptops and office equipment lose value on a declining balance:
+
+equipment = $48000
+depreciate equipment by 25% over 3 years
+
+## European Sales Office
+
+The EU sales office invoices in euros -- exchange rates in frontmatter
+were researched by the agent at current market rates:
+
+eu_monthly = €4500
+eu_monthly_usd = eu_monthly in USD
+eu_annual = eu_monthly_usd * 12
+
+UK partner agreement is invoiced in pounds:
+
+uk_monthly = £2200
+uk_monthly_usd = uk_monthly in USD
+uk_annual = uk_monthly_usd * 12
+
+## Unit Economics
+
+cac = $850
+ltv_months = 24
+ltv = price * ltv_months
+ltv_cac = number(ltv) / number(cac) as napkin
+
+monthly_churn = monthly_users * 4%
+
+## Gross Margin
+
+total_costs = team_cost + hosting_annual + eu_annual + uk_annual
+gross_profit = annual_revenue - total_costs
+
+## Runway
+
+current_cash = $2.4M
+monthly_burn = monthly_team_cost + hosting + eu_monthly_usd + uk_monthly_usd
+runway = number(current_cash) / number(monthly_burn) as napkin
+
+## Executive Summary
+
+| Metric | Value |
+|--------|-------|
+| Annual Revenue | {{annual_revenue}} |
+| Year 3 Projection | {{year_3}} |
+| Team Cost | {{team_cost}} |
+| Gross Profit | {{gross_profit}} |
+| LTV:CAC | {{ltv_cac}}x |
+| Monthly Burn | {{monthly_burn}} |
+| Runway | {{runway}} months |
+
+With {{monthly_users}} paying {{price}}/month, the business
+generates {{annual_revenue}} annually. Compounded monthly at
+{{growth_rate}}, year 3 revenue reaches {{year_3}}.
+At {{monthly_burn}}/month burn with {{current_cash}} cash,
+the runway is {{runway}} months.

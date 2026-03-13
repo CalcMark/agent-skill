@@ -1,0 +1,54 @@
+# Quick Calculations
+
+Showcasing CalcMark's domain-specific features in one-liners.
+An agent can pipe any of these: `echo "expression" | cm --format json`
+
+## Unit Conversions
+
+marathon = 42.195 km in miles
+5 gallons in liters
+
+## Rate Conversion and Accumulation
+
+1200 req/s per minute
+api_rate = 1200 req/s
+convert_rate(api_rate, hour)
+
+500 MB/day over 1 year
+
+## Capacity Planning
+
+50000 req/s at 2000 req/s per server with 25% buffer
+
+## Napkin Math
+
+~10M users * ~2 KB as napkin
+
+## Date Arithmetic
+
+deadline = Jun 30 2026
+remaining = deadline - today
+kickoff = 6 weeks from today
+
+## Financial Growth
+
+compound $10000 by 7% over 30 years
+compound $10000 by 7% monthly over 30 years
+depreciate $50000 by 15% over 5 years to $5000
+
+## Percentage Widening
+
+$250 + 8.25%
+$250 - 20%
+15% of $2000
+
+## Storage I/O
+
+read 100 MB from ssd
+compress 1 GB using gzip
+
+## Network
+
+rtt(regional)
+transfer 500 KB across regional gigabit
+downtime(99.9%, month)

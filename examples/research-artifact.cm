@@ -1,0 +1,108 @@
+# API Infrastructure Capacity Plan
+
+An agent created this document to analyze whether the current
+infrastructure can handle projected growth. Uses CalcMark's
+built-in network, storage, and capacity planning functions.
+
+## Current Traffic
+
+current_rps = 8000 req/s
+peak_multiplier = 3.5
+peak_rps = current_rps * peak_multiplier
+
+## Growth Projection
+
+Traffic is growing ~12% monthly. Project 6 months out:
+
+projected_rps = compound 8000 by 12% over 6
+
+## Server Capacity
+
+Size the compute tier against peak traffic with headroom:
+
+app_servers = peak_rps at 2000 req/s per server with 25% buffer
+
+## Database Tier
+
+Reads are 50x writes. Size read replicas and primaries separately:
+
+write_fraction = 2%
+read_fraction = 1 - write_fraction
+
+db_reads = 8000 * read_fraction
+db_writes = 8000 * write_fraction
+
+db_read_replicas = db_reads at 5000 per server with 20% buffer
+db_primaries = db_writes at 2000 per server with 25% buffer
+
+## Storage Performance
+
+A typical query reads ~5 MB. Compare storage tiers:
+
+hdd_query = seek(hdd) + read 5 MB from hdd
+ssd_query = seek(ssd) + read 5 MB from ssd
+nvme_query = seek(nvme) + read 5 MB from nvme
+
+NVMe is the right choice for hot data paths.
+
+## Latency Budget
+
+Build a latency budget for a single API response:
+
+network = rtt(regional)
+db_query = nvme_query
+app_logic = 10 ms
+total_latency = network + db_query + app_logic
+
+Under 100 ms means users perceive the response as instant.
+
+## Daily Storage Growth
+
+avg_payload = 2.5 KB
+daily_volume = current_rps over 1 day
+daily_storage = number(daily_volume) * avg_payload
+
+compressed_daily = compress daily_storage using snappy
+yearly_storage = compressed_daily * 365
+
+yearly_storage in TB
+
+## Bandwidth
+
+peak_bandwidth = peak_rps over 1 second
+gigabit = throughput(gigabit)
+ten_gig = throughput(ten_gig)
+
+## CDN Edge Transfer
+
+Media transfer time from origin to CDN edge:
+
+transfer 2 MB across continental ten_gig
+
+## Availability Budget
+
+Target 99.9% availability (three nines):
+
+monthly_downtime = downtime(99.9%, month)
+yearly_downtime = downtime(99.9%, year)
+
+Each deploy takes ~5 minutes. With 8 deploys per month:
+
+deploy_budget = 5 minutes * 8
+remaining_budget = monthly_downtime - deploy_budget
+
+## Cost Estimate
+
+compute_monthly = $450 * app_servers
+db_servers = db_read_replicas + db_primaries
+db_monthly = $800 * db_servers
+total_monthly = compute_monthly + db_monthly
+
+total_monthly as napkin
+
+## Summary
+
+At {{current_rps}} current RPS ({{peak_rps}} peak), the system needs
+{{app_servers}} app servers and {{db_read_replicas}} read replicas.
+API latency budget is {{total_latency}}. Monthly infrastructure cost
+is approximately {{total_monthly}}.
