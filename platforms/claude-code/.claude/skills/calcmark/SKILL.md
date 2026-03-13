@@ -1,12 +1,12 @@
 ---
 name: calcmark
-description: Use CalcMark to perform calculations, create computational documents, and produce analysis artifacts (.cm files, HTML, JSON, Markdown). Activate when the user needs cost modeling, capacity planning, unit conversions, date arithmetic, napkin math, or any quantitative analysis.
+description: Use CalcMark to perform calculations, create computational documents, and produce analysis artifacts (.cm files, HTML, JSON, Markdown). Activate when the user needs cost modeling, capacity planning, date arithmetic, recipe scaling, bulk or individual unit conversion, napkin math, or any quantitative analysis.
 allowed-tools: Bash(cm:*), Bash(brew:*), Bash(which:*), Bash(uname:*), Bash(curl:*), Read, Write, Edit, WebFetch
 ---
 
 # CalcMark Agent Skill
 
-CalcMark is a calculation language that blends CommonMark markdown with inline calculations -- budgets, capacity plans, cost models, project estimates. Think "spreadsheet meets markdown."
+CalcMark is a calculation language that blends CommonMark markdown with inline calculations -- budgets, capacity plans, cost models, project estimates, recipes. Think "spreadsheet meets markdown."
 
 ## First Use
 
