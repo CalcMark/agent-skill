@@ -4,7 +4,12 @@ Teach AI coding agents to use [CalcMark](https://calcmark.org) — a calculation
 
 ## Install
 
-One command per platform. Run from your project root:
+One command per platform. Run from your **project root** for project-level install, or from **`~`** for global install (all projects).
+
+| Scope | Where to run | Effect |
+|-------|-------------|--------|
+| Project | Project root | Skill available in that project only |
+| Global | Home directory (`~`) | Skill available in all projects |
 
 **Claude Code**
 
