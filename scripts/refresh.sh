@@ -15,7 +15,7 @@ CHECK=false
 [[ "${1:-}" == "--check" ]] && CHECK=true
 
 # --- Platform definitions ------------------------------------------------
-# Each entry: output_path|frontmatter
+# Each entry: output_path|frontmatter_file_function
 # Claude Code is maintained separately (different body, WebFetch-based).
 
 platforms=(
@@ -56,7 +56,14 @@ description: >
 FM
 }
 
-# --- Generate -----------------------------------------------------------
+# --- Helpers -------------------------------------------------------------
+
+generate() {
+  local platform="$1"
+  { frontmatter_"${platform}"; cat "$BODY"; }
+}
+
+# --- Generate / Check ----------------------------------------------------
 
 errors=0
 
@@ -65,23 +72,20 @@ for entry in "${platforms[@]}"; do
   platform="${entry##*|}"
   full_path="$ROOT/$outpath"
 
-  # Build expected content: frontmatter + blank line + body
-  expected="$(frontmatter_${platform})
-$(cat "$BODY")"
-
   if $CHECK; then
     if [[ ! -f "$full_path" ]]; then
       echo "MISSING: $outpath"
       errors=$((errors + 1))
-    elif [[ "$(cat "$full_path")" != "$expected" ]]; then
+    elif ! diff -q <(generate "$platform") "$full_path" > /dev/null 2>&1; then
       echo "OUT OF DATE: $outpath"
+      diff --unified <(generate "$platform") "$full_path" | head -20
       errors=$((errors + 1))
     else
       echo "OK: $outpath"
     fi
   else
     mkdir -p "$(dirname "$full_path")"
-    printf '%s\n' "$expected" > "$full_path"
+    generate "$platform" > "$full_path"
     echo "Wrote: $outpath"
   fi
 done
