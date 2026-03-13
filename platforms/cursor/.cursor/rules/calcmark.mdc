@@ -90,6 +90,46 @@ Array of blocks (`"calculation"` or `"text"`). Each calculation result has: `sou
 **Errors** go to stderr (not JSON). Check exit code.
 **Silent misinterpretation**: if output has `"type": "text"` where you expected calculations, the expression was treated as prose.
 
+## Common Pitfalls
+
+### Variables Are Immutable
+
+Variables cannot be reassigned within a document. This will error:
+
+```calcmark
+x = 10
+x = 20   # ERROR: cannot reassign 'x'
+```
+
+Use distinct variable names for each calculation step.
+
+### Unit Propagation
+
+Arithmetic preserves the numerator's unit. Raw division can produce unexpected units:
+
+```calcmark
+customers = 343 customers
+servers_raw = customers / 10   # Result: 34.3 customers (NOT servers!)
+```
+
+Use the NL `capacity` form instead:
+
+```calcmark
+servers = 343 customers at 10 customers per server   # Result: 35 server ✓
+```
+
+### Prefer NL Forms Over Raw Arithmetic
+
+Built-in NL functions handle rounding, units, and edge cases. Run `cm help functions` to see all available forms. Key examples:
+
+- **Capacity**: `demand at cap per unit` instead of manual division
+- **Growth**: `compound P by R over T` or `grow S by X over N` instead of manual formulas
+- **Rates**: `rate over duration` instead of manual multiplication
+
+### Error Output Goes to stderr
+
+Errors are plain text on stderr, not JSON. Always check the exit code before parsing output as JSON.
+
 ## Security
 
 - Ask the user before installing `cm`
