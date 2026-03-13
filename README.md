@@ -9,33 +9,29 @@ One command per platform. Run from your project root:
 **Claude Code**
 
 ```bash
-mkdir -p .claude/skills/calcmark && curl -sL \
-  https://raw.githubusercontent.com/CalcMark/agent-skill/main/platforms/claude-code/.claude/skills/calcmark/SKILL.md \
-  -o .claude/skills/calcmark/SKILL.md
+curl -sL --create-dirs -o .claude/skills/calcmark/SKILL.md \
+  https://raw.githubusercontent.com/CalcMark/agent-skill/main/platforms/claude-code/.claude/skills/calcmark/SKILL.md
 ```
 
 **Cursor**
 
 ```bash
-mkdir -p .cursor/rules && curl -sL \
-  https://raw.githubusercontent.com/CalcMark/agent-skill/main/platforms/cursor/.cursor/rules/calcmark.mdc \
-  -o .cursor/rules/calcmark.mdc
+curl -sL --create-dirs -o .cursor/rules/calcmark.mdc \
+  https://raw.githubusercontent.com/CalcMark/agent-skill/main/platforms/cursor/.cursor/rules/calcmark.mdc
 ```
 
 **GitHub Copilot CLI**
 
 ```bash
-mkdir -p .github/skills/calcmark && curl -sL \
-  https://raw.githubusercontent.com/CalcMark/agent-skill/main/platforms/copilot-cli/.github/skills/calcmark/SKILL.md \
-  -o .github/skills/calcmark/SKILL.md
+curl -sL --create-dirs -o .github/skills/calcmark/SKILL.md \
+  https://raw.githubusercontent.com/CalcMark/agent-skill/main/platforms/copilot-cli/.github/skills/calcmark/SKILL.md
 ```
 
 **Gemini CLI**
 
 ```bash
-mkdir -p .gemini/skills/calcmark && curl -sL \
-  https://raw.githubusercontent.com/CalcMark/agent-skill/main/platforms/gemini-cli/.gemini/skills/calcmark/SKILL.md \
-  -o .gemini/skills/calcmark/SKILL.md
+curl -sL --create-dirs -o .gemini/skills/calcmark/SKILL.md \
+  https://raw.githubusercontent.com/CalcMark/agent-skill/main/platforms/gemini-cli/.gemini/skills/calcmark/SKILL.md
 ```
 
 ## What the Agent Gets
