@@ -1,7 +1,7 @@
 ---
 name: calcmark
 description: Use CalcMark to perform calculations, create computational documents, and produce analysis artifacts (.cm files, HTML, JSON, Markdown). Activate when the user needs cost modeling, capacity planning, unit conversions, date arithmetic, napkin math, or any quantitative analysis.
-allowed-tools: Bash(cm:*), Bash(brew:*), Bash(which:*), Bash(uname:*), Bash(curl:*), Read, Write, WebFetch
+allowed-tools: Bash(cm:*), Bash(brew:*), Bash(which:*), Bash(uname:*), Bash(curl:*), Read, Write, Edit, WebFetch
 ---
 
 # CalcMark Agent Skill
@@ -79,6 +79,12 @@ transfer 500 KB across regional gigabit               # network transfer
 1. **Quick calc**: pipe one-liner, extract `numeric_value` from JSON
 2. **Research artifact**: write `.cm` file, `cm eval` for JSON evidence
 3. **Document deliverable**: write `.cm` with `{{templates}}`, `cm convert --to=html`
+
+### Common Pitfalls
+
+- **Variables are immutable** — you cannot reassign a variable. Use distinct names for each step.
+- **Unit propagation** — `customers / 10` keeps the `customers` unit. Use NL forms like `343 customers at 10 customers per server` for correct unit handling.
+- **Prefer NL forms** — use `capacity`, `compound`, `grow`, and other NL functions instead of raw arithmetic. Run `cm help functions` to discover them.
 
 ### Error Handling
 
